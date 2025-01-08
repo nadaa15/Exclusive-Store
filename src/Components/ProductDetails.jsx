@@ -19,6 +19,8 @@ export default function ProductDetails() {
   const price = productDetails.price * displayedQuantity;
   const dispatch = useDispatch();
   const { id, category } = useParams();
+  const isMobile = window.innerWidth <= 768;
+
 
   const settings = {
     dots: true,
@@ -34,7 +36,7 @@ export default function ProductDetails() {
         style={{
           position: "absolute",
           top: "0",
-          right: "30%",
+          right: isMobile ? "40%" : "30%",
         }}
       >
         <ul
@@ -42,7 +44,7 @@ export default function ProductDetails() {
             margin: "0px",
             display: "flex",
             flexDirection: "column",
-            gap: "100px",
+            gap: isMobile?"40px": "100px",
           }}
         >
           {dots}
@@ -58,9 +60,9 @@ export default function ProductDetails() {
         {productDetails.images?.[i] ? (
           <img
             style={{
-              width: "100%",
               backgroundColor: "#F5F5F5",
             }}
+            className="w-6/12 md:w-full"
             src={productDetails.images[i]}
             alt={productDetails.title}
             loading="lazy"
@@ -128,7 +130,7 @@ export default function ProductDetails() {
       <section>
         <div className="md:flex justify-center items-center gap-32">
           {/* Product Image Slider */}
-          <div className="card-img mb-4 w-full md:w-1/2 md:mb-0">
+          <div className="card-img mb-10 w-full md:w-1/2 md:mb-0">
             <div className="slider-container relative">
               {productDetails.images?.length > 1 ? (
                 <Slider {...settings}>
@@ -146,8 +148,8 @@ export default function ProductDetails() {
                 <img
                   className="w-full object-cover bg-[#F5F5F5]"
                   src={productDetails.images?.[0]}
-                    alt={productDetails.title}
-                    loading="lazy"
+                  alt={productDetails.title}
+                  loading="lazy"
                 />
               )}
             </div>
@@ -160,21 +162,17 @@ export default function ProductDetails() {
                 {productDetails.title}
               </h1>
               <ul className="flex justify-start items-center gap-1 my-2">
-                <li>
-                  <i className="fas fa-star text-yellow-400"></i>
-                </li>
-                <li>
-                  <i className="fas fa-star text-yellow-400"></i>
-                </li>
-                <li>
-                  <i className="fas fa-star text-yellow-400"></i>
-                </li>
-                <li>
-                  <i className="fas fa-star text-yellow-400"></i>
-                </li>
-                <li>
-                  <i className="fas fa-star text-gray-300"></i>
-                </li>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <li key={star}>
+                    <i
+                      className={`fas fa-star ${
+                        star <= productDetails.rating
+                          ? "text-yellow-400"
+                          : "text-gray-300"
+                      }`}
+                    ></i>
+                  </li>
+                ))}
                 <li className="flex items-center gap-4">
                   <p className="ms-2 text-gray-400">
                     ({productDetails.rating})
@@ -190,7 +188,7 @@ export default function ProductDetails() {
             </div>
 
             {/* Action Buttons */}
-            <div className="my-4 flex justify-start items-center gap-8">
+            <div className="my-4 flex flex-col md:flex-row justify-start items-center gap-8">
               <div className="flex justify-center items-center">
                 <i
                   onClick={handleDecrease}
@@ -204,25 +202,27 @@ export default function ProductDetails() {
                   className="fa-solid fa-plus border border-gray-400 hover:border-0 hover:bg-main hover:text-white cursor-pointer rounded-r-md px-4 py-3"
                 ></i>
               </div>
-              <button
-                onClick={handleAddToCart}
-                className="bg-main text-white py-2 px-12 rounded-md shadow hover:bg-opacity-90"
-              >
-                Buy Now
-              </button>
-              <button
-                onClick={handleAddToWishlist}
-                className="border p-2 border-gray-400 rounded-md"
-              >
-                <svg
-                  viewBox="0 0 1024 1024"
-                  fill="currentColor"
-                  height="20px"
-                  width="20px"
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handleAddToCart}
+                  className="bg-main text-white py-2 px-12 rounded-md shadow hover:bg-opacity-90"
                 >
-                  <path d="M923 283.6a260.04 260.04 0 00-56.9-82.8 264.4 264.4 0 00-84-55.5A265.34 265.34 0 00679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 00-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z" />
-                </svg>
-              </button>
+                  Buy Now
+                </button>
+                <button
+                  onClick={handleAddToWishlist}
+                  className="border p-2 border-gray-400 rounded-md"
+                >
+                  <svg
+                    viewBox="0 0 1024 1024"
+                    fill="currentColor"
+                    height="20px"
+                    width="20px"
+                  >
+                    <path d="M923 283.6a260.04 260.04 0 00-56.9-82.8 264.4 264.4 0 00-84-55.5A265.34 265.34 0 00679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 00-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <div className="mt-10">

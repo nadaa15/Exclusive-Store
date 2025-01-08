@@ -64,6 +64,7 @@
   list-style-type: none;
   gap: 8px;
   padding: 0;
+  flex-wrap: wrap;
 }
 
 .pagination .page-item {

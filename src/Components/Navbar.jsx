@@ -185,7 +185,7 @@ export default function Navbar() {
                     <i className="fa-regular fa-user fa-xl"></i>
                   </button>
                   <div
-                    className="absolute z-50 w-56 -bottom-[200px] left-[10px] p-4 rounded-md bg-black bg-opacity-0 opacity-0 group-hover:opacity-100 group-hover:bg-opacity-50 group-hover:-left-[180px] transition-all duration-300"
+                    className="absolute z-50 w-56 -bottom-[200px] left-[60px] p-4 rounded-md bg-black bg-opacity-0 opacity-0 group-hover:opacity-100 group-hover:bg-opacity-50 group-hover:-left-[180px] transition-all duration-300"
                     aria-hidden="true"
                   >
                     <ul>
