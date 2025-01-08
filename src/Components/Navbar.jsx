@@ -21,7 +21,7 @@ export default function Navbar() {
         navigate("/login");
       })
       .catch((error) => {
-          console.error("Error signing out user: ", error);
+        console.error("Error signing out user: ", error);
       });
   }
 
@@ -43,30 +43,34 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 left-0 right-0 w-full z-40 shadow-[0px_1px_0px_gray]">
-        {userLogin?<div className="bg-black text-white text-center p-3 text-sm">
-          <p>
-            Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-            <Link to={"/products"} className="ms-2 font-semibold underline">Shop Now</Link>
-          </p>
-        </div>:""}
-        
+        {userLogin ? (
+          <div className="bg-black text-white text-center p-3 text-sm">
+            <p>
+              Summer Sale For All Swim Suits And Free Express Delivery - OFF
+              50%!
+              <Link to={"/products"} className="ms-2 font-semibold underline">
+                Shop Now
+              </Link>
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
-          <Link
-            to={"/"}
-            className="flex items-center"
-          >
-            <span className="self-center text-lg md:text-2xl font-bold whitespace-nowrap dark:text-white">
+          <Link to={"/"} className="flex items-center">
+            <span className="self-center text-lg lg:text-2xl font-bold whitespace-nowrap dark:text-white">
               Exclusive
             </span>
           </Link>
           {userLogin ? (
-            <div className="flex justify-center items-center gap-2 md:order-2 ms-auto md:ms-0">
+            <div className="flex justify-center items-center gap-2 lg:order-2 ms-auto lg:ms-0">
               <button
                 type="button"
                 data-collapse-toggle="navbar-search"
                 aria-controls="navbar-search"
                 aria-expanded="false"
-                className="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+                className="lg:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
               >
                 <svg
                   className="w-5 h-5"
@@ -85,7 +89,7 @@ export default function Navbar() {
                 </svg>
                 <span className="sr-only">Search</span>
               </button>
-              <div className="relative hidden md:block">
+              <div className="relative hidden lg:block">
                 <div className="absolute inset-y-0 end-0 pe-4 flex items-center ps-3 pointer-events-none">
                   <svg
                     className="w-4 h-4 text-black dark:text-gray-400"
@@ -118,7 +122,7 @@ export default function Navbar() {
               <button
                 data-collapse-toggle="navbar-search"
                 type="button"
-                className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 aria-controls="navbar-search"
                 aria-expanded="false"
               >
@@ -236,10 +240,10 @@ export default function Navbar() {
             </div>
           ) : null}
           <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
             id="navbar-search"
           >
-            <div className="relative mt-3 md:hidden">
+            <div className="relative mt-3 lg:hidden">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -269,9 +273,8 @@ export default function Navbar() {
               />
             </div>
 
-            
             {userLogin ? (
-              <ul className="flex flex-col p-4 md:p-0 mt-4 font-normal border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="flex flex-col p-4 lg:p-0 mt-4 font-normal border border-gray-100 rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                   <NavLink
                     to=""

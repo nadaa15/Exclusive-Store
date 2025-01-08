@@ -19,7 +19,7 @@ export default function ProductDetails() {
   const price = productDetails.price * displayedQuantity;
   const dispatch = useDispatch();
   const { id, category } = useParams();
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = window.innerWidth <= 996;
 
 
   const settings = {
@@ -30,21 +30,21 @@ export default function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    className: "ms-32",
+    className: "ms-0 lg:ms-32",
     appendDots: (dots) => (
       <div
         style={{
           position: "absolute",
-          top: "0",
-          right: isMobile ? "40%" : "30%",
+          top: isMobile? "105%" :"0",
+          right: isMobile ? "0" : "30%",
         }}
       >
         <ul
           style={{
             margin: "0px",
             display: "flex",
-            flexDirection: "column",
-            gap: isMobile?"40px": "100px",
+            flexDirection: isMobile?"row": "column",
+            gap: isMobile?"60px": "100px",
           }}
         >
           {dots}
@@ -62,7 +62,7 @@ export default function ProductDetails() {
             style={{
               backgroundColor: "#F5F5F5",
             }}
-            className="w-6/12 md:w-full"
+            className="w-1/2 md:w-3/4 lg:w-full"
             src={productDetails.images[i]}
             alt={productDetails.title}
             loading="lazy"
@@ -128,9 +128,9 @@ export default function ProductDetails() {
         <meta name="description" content={productDetails.description} />
       </Helmet>
       <section>
-        <div className="md:flex justify-center items-center gap-32">
+        <div className="lg:flex justify-center items-center gap-32">
           {/* Product Image Slider */}
-          <div className="card-img mb-10 w-full md:w-1/2 md:mb-0">
+          <div className="card-img mb-32 w-full lg:w-1/2 lg:mb-0">
             <div className="slider-container relative">
               {productDetails.images?.length > 1 ? (
                 <Slider {...settings}>
@@ -156,7 +156,7 @@ export default function ProductDetails() {
           </div>
 
           {/* Product Details */}
-          <div className="w-full md:w-1/2">
+          <div className="w-full lg:w-1/2">
             <div className="border-b-2">
               <h1 className="text-slate-900 font-bold">
                 {productDetails.title}
@@ -192,26 +192,26 @@ export default function ProductDetails() {
               <div className="flex justify-center items-center">
                 <i
                   onClick={handleDecrease}
-                  className="fa-solid fa-minus border border-gray-400 hover:border-0 hover:bg-main hover:text-white cursor-pointer rounded-s-md px-4 py-3"
+                  className="fa-solid fa-minus border border-gray-400 hover:border-0 hover:bg-main hover:text-white cursor-pointer rounded-s-lg px-4 py-3"
                 ></i>
                 <p className="px-8 py-2 border border-gray-400">
                   {displayedQuantity}
                 </p>
                 <i
                   onClick={handleIncrease}
-                  className="fa-solid fa-plus border border-gray-400 hover:border-0 hover:bg-main hover:text-white cursor-pointer rounded-r-md px-4 py-3"
+                  className="fa-solid fa-plus border border-gray-400 hover:border-0 hover:bg-main hover:text-white cursor-pointer rounded-r-lg px-4 py-3"
                 ></i>
               </div>
               <div className="flex items-center gap-4">
                 <button
                   onClick={handleAddToCart}
-                  className="bg-main text-white py-2 px-12 rounded-md shadow hover:bg-opacity-90"
+                  className="bg-main text-white py-2 px-12 rounded-lg shadow hover:bg-opacity-90"
                 >
                   Buy Now
                 </button>
                 <button
                   onClick={handleAddToWishlist}
-                  className="border p-2 border-gray-400 rounded-md"
+                  className="border p-2 border-gray-400 rounded-lg"
                 >
                   <svg
                     viewBox="0 0 1024 1024"
