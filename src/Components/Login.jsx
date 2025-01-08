@@ -73,11 +73,11 @@ export default function Signup() {
           content="Access your Exclusive account to manage orders, track your wishlist, and enjoy a personalized shopping experience."
         />
       </Helmet>
-      <div className="flex justify-between items-center gap-5 container">
-        <div className="w-1/2">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-5 container">
+        <div className="w-full md:w-1/2">
           <img src={signupImg} alt="Signup Illustration" className="w-full" loading="lazy"/>
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
             <div className="mb-8">
               <h2 className="text-main text-3xl font-bold mb-4">
