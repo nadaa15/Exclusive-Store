@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="w-full bg-black pt-6">
       <div className="mx-auto w-full max-w-screen-xl text-white">
-        <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-5">
+        <div className="grid grid-cols-1 gap-8 px-4 py-6 lg:py-8 sm:grid-cols-2 md:grid-cols-5">
           <div>
             <h2 className="mb-6 text-xl font-medium">Exclusive</h2>
             <ul className="">

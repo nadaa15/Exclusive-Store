@@ -7,7 +7,7 @@ import BestSelling from './BestSelling';
 import OurProducts from './OurProducts';
 import NewArrival from './NewArrival';
 import axios from 'axios';
-import HomrSlider from './HomeSlider';
+import HomeSlider from './HomeSlider';
 import { Helmet } from 'react-helmet';
 export default function Home() {
     const [timeLeft, setTimeLeft] = useState({
@@ -135,7 +135,7 @@ export default function Home() {
         </aside>
 
         <header className=" w-full md:w-3/4 mt-8 md:mt-0">
-          <HomrSlider />
+          <HomeSlider />
         </header>
       </div>
       <main className="container">

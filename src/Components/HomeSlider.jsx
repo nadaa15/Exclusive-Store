@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import hero from "../assets/images/hero.png";
 import appleLogo from "../assets/images/apple-logo.png";
 import { Link } from "react-router-dom";
-export default function SimpleSlider() {
+export default function HomeSlider() {
   var settings = {
     dots: true,
     infinite: true,
