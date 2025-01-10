@@ -14,9 +14,9 @@ import CategoryProducts from './Components/CategoryProducts'
 import ProductDetails from './Components/ProductDetails'
 import Cart from './Components/Cart'
 import { PersistGate } from "redux-persist/integration/react";
-import { persistor } from "./Redux/store";
+import { persistor } from "./Redux/Store";
 import { Provider } from "react-redux";
-import store from "./Redux/store";
+import store from "./Redux/Store";
 import SearchedProducts from './Components/SearchedProducts'
 import WishList from './Components/WishList'
 import Checkout from './Components/Checkout'
@@ -110,14 +110,6 @@ export default function App() {
             </ProtectedRoute>
           ),
         },
-        // {
-        //   path: "brands",
-        //   element: (
-        //     <ProtectedRoute>
-        //       <Brands />
-        //     </ProtectedRoute>
-        //   ),
-        // },
         {
           path: "/checkout",
           element: (
