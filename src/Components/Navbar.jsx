@@ -8,8 +8,13 @@ import { getAuth, signOut } from "firebase/auth";
 export default function Navbar() {
   let { userLogin, setUserLogin } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleSearchToggle = () => setIsSearchOpen(!isSearchOpen);
+  const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
 
   function handleLogOut() {
     const auth = getAuth();
@@ -44,32 +49,29 @@ export default function Navbar() {
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 left-0 right-0 w-full z-40 shadow-[0px_1px_0px_gray]">
         {userLogin ? (
-          <div className="bg-black text-white text-center p-3 text-sm">
+          <div className="bg-black text-white text-center p-3 text-xs md:text-sm">
             <p>
               Summer Sale For All Swim Suits And Free Express Delivery - OFF
               50%!
-              <Link to={"/products"} className="ms-2 font-semibold underline">
+              <Link to="/products" className="ms-2 font-semibold underline">
                 Shop Now
               </Link>
             </p>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
 
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
-          <Link to={"/"} className="flex items-center">
+          <Link to="/" className="flex items-center">
             <span className="self-center text-lg lg:text-2xl font-bold whitespace-nowrap dark:text-white">
               Exclusive
             </span>
           </Link>
+
           {userLogin ? (
             <div className="flex justify-center items-center gap-2 lg:order-2 ms-auto lg:ms-0">
               <button
                 type="button"
-                data-collapse-toggle="navbar-search"
-                aria-controls="navbar-search"
-                aria-expanded="false"
+                onClick={handleSearchToggle}
                 className="lg:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
               >
                 <svg
@@ -89,42 +91,13 @@ export default function Navbar() {
                 </svg>
                 <span className="sr-only">Search</span>
               </button>
-              <div className="relative hidden lg:block">
-                <div className="absolute inset-y-0 end-0 pe-4 flex items-center ps-3 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-black dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                  <span className="sr-only">Search icon</span>
-                </div>
-                <input
-                  type="text"
-                  id="search-navbar"
-                  className="block w-full me-8 py-2 px-4 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="What are you looking for?"
-                  value={searchValue}
-                  onChange={(e) => {
-                    handleSearch(e.target.value);
-                  }}
-                />
-              </div>
+
               <button
-                data-collapse-toggle="navbar-search"
+                onClick={handleMenuToggle}
                 type="button"
                 className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 aria-controls="navbar-search"
-                aria-expanded="false"
+                aria-expanded={isMenuOpen ? "true" : "false"}
               >
                 <span className="sr-only">Open main menu</span>
                 <svg
@@ -144,6 +117,36 @@ export default function Navbar() {
                 </svg>
               </button>
               <div className="flex items-center gap-4">
+                {/* Navbar search for desktop */}
+                <div className="relative hidden lg:block">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="search-navbar"
+                    className="block w-full p-2 ps-10 me-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-main focus:border-main"
+                    placeholder="What are you looking for?"
+                    value={searchValue}
+                    onChange={(e) => {
+                      handleSearch(e.target.value);
+                    }}
+                  />
+                </div>
                 <NavLink to="wishlist" className="relative">
                   <svg
                     viewBox="0 0 1024 1024"
@@ -239,14 +242,89 @@ export default function Navbar() {
               </div>
             </div>
           ) : null}
-          <div
-            className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
-            id="navbar-search"
-          >
-            <div className="relative mt-3 lg:hidden">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+
+          {/* Navbar menu for Desktop */}
+
+          {userLogin ? (
+            <ul className="hidden lg:flex font-normal gap-8">
+              <li>
+                <NavLink
+                  to=""
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                  aria-current="page"
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/products"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  Products
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/about"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/contact"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  Contact
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  Sign Up
+                </NavLink>
+              </li>
+            </ul>
+          ) : (
+            ""
+          )}
+        </div>
+
+        {userLogin ? (
+          <>
+            {/* Navbar search for mobile */}
+            <div
+              className={`relative ${
+                isSearchOpen ? "block" : "hidden"
+              } mb-4 lg:hidden mx-2`}
+            >
+              <div className="absolute inset-y-0 end-0 pe-4 flex items-center ps-3 pointer-events-none">
                 <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  className="w-4 h-4 text-black dark:text-gray-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -260,11 +338,12 @@ export default function Navbar() {
                     d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                   />
                 </svg>
+                <span className="sr-only">Search icon</span>
               </div>
               <input
                 type="text"
                 id="search-navbar"
-                className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full me-8 py-2 px-4 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-main focus:border-main"
                 placeholder="What are you looking for?"
                 value={searchValue}
                 onChange={(e) => {
@@ -273,75 +352,76 @@ export default function Navbar() {
               />
             </div>
 
-            {userLogin ? (
-              <ul className="flex flex-col p-4 lg:p-0 mt-4 font-normal border border-gray-100 rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
-                <li>
-                  <NavLink
-                    to=""
-                    className={({ isActive }) => {
-                      return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
-                        isActive ? `before:w-full` : "before:w-0"
-                      }`;
-                    }}
-                    aria-current="page"
-                  >
-                    Home
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/products"
-                    className={({ isActive }) => {
-                      return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
-                        isActive ? `before:w-full` : "before:w-0"
-                      }`;
-                    }}
-                  >
-                    Products
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/about"
-                    className={({ isActive }) => {
-                      return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
-                        isActive ? `before:w-full` : "before:w-0"
-                      }`;
-                    }}
-                  >
-                    About
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/contact"
-                    className={({ isActive }) => {
-                      return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
-                        isActive ? `before:w-full` : "before:w-0"
-                      }`;
-                    }}
-                  >
-                    Contact
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/signup"
-                    className={({ isActive }) => {
-                      return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
-                        isActive ? `before:w-full` : "before:w-0"
-                      }`;
-                    }}
-                  >
-                    Sign Up
-                  </NavLink>
-                </li>
-              </ul>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
+            {/* Navbar menu for mobile */}
+            <ul
+              className={` ${
+                isMenuOpen ? "flex" : "hidden"
+              } flex-col p-4 font-normal border border-gray-100 rounded-lg bg-gray-50 w-full lg:hidden`}
+            >
+              <li>
+                <NavLink
+                  to=""
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                  aria-current="page"
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/products"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  Products
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/about"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/contact"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  Contact
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) => {
+                    return `relative before:bg-gray-700 before:h-[1px] before:absolute before:left-0 before:-bottom-1 hover:before:w-full before:transition-all duration-300 cursor-pointer ${
+                      isActive ? `before:w-full` : "before:w-0"
+                    }`;
+                  }}
+                >
+                  Sign Up
+                </NavLink>
+              </li>
+            </ul>
+          </>
+        ) : null}
       </nav>
     </>
   );
