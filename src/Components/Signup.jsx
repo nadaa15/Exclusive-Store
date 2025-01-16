@@ -179,6 +179,7 @@ export default function Signup() {
                 )}
               </button>
               <button
+                type="button"
                 onClick={signInWithGoogle}
                 className="w-full flex justify-center items-center gap-3 text-black bg-gray-50 hover:bg-opacity-95 font-semibold text-md px-14 py-2.5 text-center border"
               >
