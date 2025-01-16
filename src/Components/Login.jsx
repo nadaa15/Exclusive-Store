@@ -7,7 +7,7 @@ import { UserContext } from "../Contexts/UserContext";
 import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 
-export default function Signup() {
+export default function Login() {
     let { userLogin, setUserLogin, setUserName } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
